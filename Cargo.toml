@@ -3,6 +3,7 @@
 [workspace]
 members = [
     "tools/shard-indexer",
+    "crates/eco-fort",
 ]
 resolver = "2"
 
