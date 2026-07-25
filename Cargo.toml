@@ -19,6 +19,11 @@ rusqlite = { version = "0.32.1", features = ["bundled"] }
 serde = { version = "1.0.203", features = ["derive"] }
 serde_json = { version = "1.0.120" }
 chrono = { version = "0.4.38", features = ["clock"] }
+walkdir = "2.5.0"
+clap = { version = "4.5.51", features = ["derive"] }
+rand = "0.8.5"
+ed25519-dalek = { version = "2.0.0-rc.3", features = ["rand_core"] }
+sqlx = { version = "0.7.4", features = ["runtime-tokio", "postgres", "chrono"] }
 
 [workspace.metadata.kani.flags]
 default-unwind = "4"
