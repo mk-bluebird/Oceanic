@@ -1,0 +1,16 @@
+# crates/eco-fort/Cargo.toml
+
+[package]
+name = "eco-fort"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+tokio = { version = "1.40.0", features = ["rt-multi-thread", "macros"] }
+sqlx = { version = "0.7.4", features = ["runtime-tokio", "postgres", "chrono"] }
+chrono = { version = "0.4.38", features = ["clock"] }
+
+[dev-dependencies]
+kani-verifier = { version = "0.67.0" }
