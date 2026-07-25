@@ -4,6 +4,7 @@
 members = [
     "tools/shard-indexer",
     "crates/eco-fort",
+    "crates/eco-crypto",
 ]
 resolver = "2"
 
