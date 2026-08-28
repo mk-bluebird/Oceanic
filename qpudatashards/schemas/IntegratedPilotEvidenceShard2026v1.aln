@@ -1,0 +1,496 @@
+# IntegratedPilotEvidenceShard2026v1.aln
+# Canonical ALN schema for non-actuating integrated pilot evidence
+# Domain: water-accounting, water-quality, aerosol-safety, thermal-monitoring, habitat-connectivity, governance-privacy
+# License: MIT OR Apache-2.0
+# Governance: Frozen grammar, read-only diagnostic, non-actuating
+
+schema_ref: IntegratedPilotEvidenceShard2026v1
+schema_version: 2026v1
+schema_kind: evidence_shard
+schema_status: frozen
+
+# -----------------------------------------------------------------------------
+# Core identity and provenance fields
+# -----------------------------------------------------------------------------
+fields:
+  - name: schema_ref
+    type: string
+    required: true
+    description: Reference to this schema definition
+    pattern: "^IntegratedPilotEvidenceShard2026v[0-9]+$"
+
+  - name: shard_id
+    type: string
+    required: true
+    description: Unique identifier for this evidence shard
+    pattern: "^[a-zA-Z0-9_-]{16,64}$"
+
+  - name: observed_at_utc
+    type: string
+    required: true
+    description: ISO 8601 UTC timestamp of observation
+    pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?Z$"
+
+  - name: region
+    type: string
+    required: true
+    description: Geographic region descriptor (non-exact location)
+    max_length: 128
+
+  - name: primary_plane
+    type: string
+    required: true
+    description: Primary operational plane for this record
+    allowed_values:
+      - water_accounting
+      - water_quality
+      - aerosol_safety
+      - thermal_monitoring
+      - habitat_connectivity
+      - governance_privacy
+
+  - name: evidencehex
+    type: string
+    required: true
+    description: SHA-256 hex digest of evidence payload (0x-prefixed, 64 nybbles)
+    pattern: "^0x[a-fA-F0-9]{64}$"
+
+  - name: signingdid
+    type: string
+    required: true
+    description: Decentralized identifier of signing authority
+    pattern: "^did:[a-zA-Z0-9_-]+:[a-zA-Z0-9_-]+$"
+
+  - name: review_status
+    type: string
+    required: true
+    description: Current review state of this evidence record
+    max_length: 64
+
+  - name: data_quality_factor
+    type: number
+    required: true
+    description: Data quality indicator (0.0-1.0)
+    minimum: 0.0
+    maximum: 1.0
+
+  - name: knowledge_factor
+    type: number
+    required: true
+    description: Knowledge maturity/rigor factor (0.0-1.0)
+    minimum: 0.0
+    maximum: 1.0
+
+  - name: eco_impact_value
+    type: number
+    required: true
+    description: Ecological impact value (0.0-1.0)
+    minimum: 0.0
+    maximum: 1.0
+
+  - name: harm_risk
+    type: number
+    required: true
+    description: Harm/risk metric (0.0-1.0)
+    minimum: 0.0
+    maximum: 1.0
+
+  - name: rights_alignment
+    type: number
+    required: true
+    description: Rights alignment score (0.0-1.0)
+    minimum: 0.0
+    maximum: 1.0
+
+  - name: accessibility_impact
+    type: number
+    required: true
+    description: Accessibility impact score (0.0-1.0)
+    minimum: 0.0
+    maximum: 1.0
+
+# -----------------------------------------------------------------------------
+# Water accounting fields
+# -----------------------------------------------------------------------------
+  - name: water_extracted_m3
+    type: number
+    required: true
+    description: Total water extracted in cubic meters
+    minimum: 0.0
+
+  - name: water_treated_m3
+    type: number
+    required: true
+    description: Total water treated in cubic meters
+    minimum: 0.0
+
+  - name: water_evaporated_gross_m3
+    type: number
+    required: true
+    description: Gross evaporated water in cubic meters
+    minimum: 0.0
+
+  - name: water_counterfactual_vapor_m3
+    type: number
+    required: true
+    description: Counterfactual atmospheric vapor in cubic meters
+    minimum: 0.0
+
+  - name: water_evaporated_attributable_m3
+    type: number
+    required: true
+    description: Attributable evaporated water (gross - counterfactual)
+    minimum: 0.0
+
+  - name: water_discharged_m3
+    type: number
+    required: true
+    description: Water discharged in cubic meters
+    minimum: 0.0
+
+  - name: water_recovered_m3
+    type: number
+    required: true
+    description: Water recovered in cubic meters
+    minimum: 0.0
+
+  - name: water_storage_change_m3
+    type: number
+    required: true
+    description: Change in water storage in cubic meters (positive=increase)
+    minimum: null
+
+  - name: water_balance_residual_m3
+    type: number
+    required: true
+    description: Water balance residual (computed)
+    minimum: null
+
+  - name: water_balance_uncertainty_m3
+    type: number
+    required: true
+    description: Water balance uncertainty bound in cubic meters
+    minimum: 0.0
+
+  - name: water_balance_within_uncertainty
+    type: boolean
+    required: true
+    description: Whether residual is within uncertainty bounds
+
+# -----------------------------------------------------------------------------
+# Water and treatment status fields
+# -----------------------------------------------------------------------------
+  - name: treatment_status
+    type: string
+    required: true
+    description: Status of water treatment operations
+    max_length: 64
+
+  - name: turbidity_ntu
+    type: number
+    required: false
+    description: Turbidity in NTU
+    minimum: 0.0
+
+  - name: conductivity_us_per_cm
+    type: number
+    required: false
+    description: Conductivity in µS/cm
+    minimum: 0.0
+
+  - name: ph
+    type: number
+    required: false
+    description: pH level
+    minimum: 0.0
+    maximum: 14.0
+
+  - name: chlorine_residual_mg_per_l
+    type: number
+    required: false
+    description: Chlorine residual in mg/L
+    minimum: 0.0
+
+  - name: water_temperature_c
+    type: number
+    required: false
+    description: Water temperature in Celsius
+    minimum: null
+    maximum: null
+
+  - name: flow_m3_per_s
+    type: number
+    required: false
+    description: Flow rate in cubic meters per second
+    minimum: 0.0
+
+  - name: water_quality_anomaly_score
+    type: number
+    required: true
+    description: Anomaly score for water quality (0.0-1.0)
+    minimum: 0.0
+    maximum: 1.0
+
+  - name: water_quality_alert_state
+    type: string
+    required: true
+    description: Water quality alert state
+    allowed_values:
+      - normal
+      - anomaly_review
+      - hold_for_review
+      - halted
+
+# -----------------------------------------------------------------------------
+# Aerosol and humidity corridor fields
+# -----------------------------------------------------------------------------
+  - name: aerosol_risk_level
+    type: string
+    required: true
+    description: Aerosol risk classification
+    allowed_values:
+      - low
+      - elevated
+      - hold_for_review
+      - halted
+
+  - name: aerosol_review_required
+    type: boolean
+    required: true
+    description: Whether aerosol review is required
+
+  - name: relative_humidity_percent
+    type: number
+    required: true
+    description: Ambient relative humidity percentage
+    minimum: 0.0
+    maximum: 100.0
+
+  - name: near_node_relative_humidity_percent
+    type: number
+    required: true
+    description: Near-node relative humidity percentage
+    minimum: 0.0
+    maximum: 100.0
+
+  - name: humidity_budget_hours_used
+    type: number
+    required: true
+    description: Humidity budget hours consumed
+    minimum: 0.0
+
+  - name: humidity_budget_hours_limit
+    type: number
+    required: true
+    description: Humidity budget hours limit
+    minimum: 0.0
+
+  - name: vapor_source_rate_kg_per_s
+    type: number
+    required: true
+    description: Vapor source rate in kg/s
+    minimum: 0.0
+
+  - name: canyon_exchange_velocity_m_per_s
+    type: number
+    required: true
+    description: Canyon exchange velocity in m/s
+    minimum: 0.0
+
+# -----------------------------------------------------------------------------
+# Thermal and spatial fields
+# -----------------------------------------------------------------------------
+  - name: thermal_benefit_wbgt_reduction_c
+    type: number
+    required: true
+    description: Wet-bulb globe temperature reduction in Celsius
+    minimum: null
+
+  - name: land_surface_temperature_anomaly_c
+    type: number
+    required: true
+    description: Land surface temperature anomaly in Celsius
+    minimum: null
+
+  - name: thermal_autocorrelation_lag
+    type: integer
+    required: true
+    description: Thermal autocorrelation lag (time steps)
+    minimum: 0
+
+  - name: thermal_autocorrelation_value
+    type: number
+    required: true
+    description: Thermal autocorrelation value (-1.0 to 1.0)
+    minimum: -1.0
+    maximum: 1.0
+
+  - name: thermal_recalibration_required
+    type: boolean
+    required: true
+    description: Whether thermal recalibration is required
+
+  - name: hex_anchor
+    type: string
+    required: true
+    description: Hex-grid anchor reference
+    pattern: "^[a-zA-Z0-9_-]{4,32}$"
+
+  - name: corridor_connectivity_min
+    type: number
+    required: true
+    description: Minimum corridor connectivity score (0.0-1.0)
+    minimum: 0.0
+    maximum: 1.0
+
+  - name: corridor_connectivity_weighted
+    type: number
+    required: true
+    description: Weighted corridor connectivity score (0.0-1.0)
+    minimum: 0.0
+    maximum: 1.0
+
+  - name: corridor_limiting_species
+    type: string
+    required: true
+    description: Species limiting corridor connectivity
+    max_length: 128
+
+  - name: corridor_review_required
+    type: boolean
+    required: true
+    description: Whether corridor review is required
+
+# -----------------------------------------------------------------------------
+# Dashboard privacy fields
+# -----------------------------------------------------------------------------
+  - name: dashboard_privacy_epsilon
+    type: number
+    required: true
+    description: Differential privacy epsilon parameter
+    minimum: 0.0
+
+  - name: dashboard_privacy_period_budget
+    type: number
+    required: true
+    description: Differential privacy period budget
+    minimum: 0.0
+
+  - name: dashboard_privacy_budget_spent
+    type: number
+    required: true
+    description: Differential privacy budget spent so far
+    minimum: 0.0
+
+  - name: dashboard_person_linked_aggregate_suppressed
+    type: boolean
+    required: true
+    description: Whether person-linked aggregates are suppressed
+
+  - name: dashboard_minimum_aggregation_count
+    type: integer
+    required: true
+    description: Minimum count for aggregation release
+    minimum: 1
+
+  - name: grievance_status
+    type: string
+    required: true
+    description: Accessible grievance status
+    max_length: 64
+
+  - name: public_review_status
+    type: string
+    required: true
+    description: Public review status
+    max_length: 64
+
+# -----------------------------------------------------------------------------
+# Schema invariants
+# -----------------------------------------------------------------------------
+invariants:
+  - name: bounded_metrics_0_1
+    description: All 0-1 metrics must be bounded
+    check: |
+      data_quality_factor >= 0.0 AND data_quality_factor <= 1.0 AND
+      knowledge_factor >= 0.0 AND knowledge_factor <= 1.0 AND
+      eco_impact_value >= 0.0 AND eco_impact_value <= 1.0 AND
+      harm_risk >= 0.0 AND harm_risk <= 1.0 AND
+      rights_alignment >= 0.0 AND rights_alignment <= 1.0 AND
+      accessibility_impact >= 0.0 AND accessibility_impact <= 1.0 AND
+      water_quality_anomaly_score >= 0.0 AND water_quality_anomaly_score <= 1.0 AND
+      relative_humidity_percent >= 0.0 AND relative_humidity_percent <= 100.0 AND
+      near_node_relative_humidity_percent >= 0.0 AND near_node_relative_humidity_percent <= 100.0 AND
+      corridor_connectivity_min >= 0.0 AND corridor_connectivity_min <= 1.0 AND
+      corridor_connectivity_weighted >= 0.0 AND corridor_connectivity_weighted <= 1.0 AND
+      thermal_autocorrelation_value >= -1.0 AND thermal_autocorrelation_value <= 1.0
+
+  - name: water_amounts_non_negative
+    description: Water amounts and uncertainty must be non-negative
+    check: |
+      water_extracted_m3 >= 0.0 AND
+      water_treated_m3 >= 0.0 AND
+      water_evaporated_gross_m3 >= 0.0 AND
+      water_counterfactual_vapor_m3 >= 0.0 AND
+      water_evaporated_attributable_m3 >= 0.0 AND
+      water_discharged_m3 >= 0.0 AND
+      water_recovered_m3 >= 0.0 AND
+      water_balance_uncertainty_m3 >= 0.0
+
+  - name: attributable_evaporation_bound
+    description: Attributable evaporation cannot exceed gross evaporation
+    check: water_evaporated_attributable_m3 <= water_evaporated_gross_m3
+
+  - name: evaporation_attribution_identity
+    description: Attributable evaporation equals gross minus counterfactual
+    check: |
+      ABS(water_evaporated_attributable_m3 - (water_evaporated_gross_m3 - water_counterfactual_vapor_m3)) < 0.0001
+
+  - name: balance_within_uncertainty_requires_review
+    description: False water_balance_within_uncertainty requires reconciliation review
+    check: |
+      water_balance_within_uncertainty = TRUE OR
+      review_status LIKE '%reconciliation%' OR
+      review_status LIKE '%review%'
+
+  - name: aerosol_risk_vocabulary
+    description: aerosol_risk_level uses controlled vocabulary
+    check: |
+      aerosol_risk_level IN ('low', 'elevated', 'hold_for_review', 'halted')
+
+  - name: water_quality_alert_vocabulary
+    description: water_quality_alert_state uses controlled vocabulary
+    check: |
+      water_quality_alert_state IN ('normal', 'anomaly_review', 'hold_for_review', 'halted')
+
+  - name: privacy_epsilon_positive
+    description: dashboard_privacy_epsilon must be positive
+    check: dashboard_privacy_epsilon > 0.0
+
+  - name: privacy_budget_bound
+    description: Privacy budget spent cannot exceed period budget
+    check: dashboard_privacy_budget_spent <= dashboard_privacy_period_budget
+
+  - name: person_linked_suppression
+    description: Person-linked aggregates suppressed below minimum count
+    check: |
+      dashboard_person_linked_aggregate_suppressed = TRUE OR
+      dashboard_minimum_aggregation_count IS NULL OR
+      dashboard_minimum_aggregation_count <= 0
+
+  - name: no_actuator_fields
+    description: Schema contains no actuator or hardware-control fields
+    check: |
+      NOT EXISTS (SELECT 1 FROM field_names WHERE name IN (
+        'valve_position', 'pump_speed', 'motor_rpm', 'nozzle_flow',
+        'power_routing', 'deployment_command', 'actuator_override'
+      ))
+
+# -----------------------------------------------------------------------------
+# Example reference values (non-operational)
+# -----------------------------------------------------------------------------
+example_defaults:
+  review_status: reference_example_not_operational
+  public_review_status: reference_example_for_dashboard_wiring
+  treatment_status: reference_example_not_operational
+  signingdid: "did:eco-fort:reference-non-operational-2026v1"
