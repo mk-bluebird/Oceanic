@@ -1,0 +1,117 @@
+aln_version: "2"
+policy_name: "cyboquatic-surcharge-breach-containment"
+policy_date: "2026-09-01"
+review_status: "conditional"
+
+governance:
+  accountable_did: "bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7"
+  knowledge_factor: 0.86
+  eco_impact_value: 0.81
+  harm_risk: 0.29
+  rights_alignment: 0.91
+  accessibility_impact: 0.88
+  human_oversight_required_for:
+    - "critical"
+    - "human_review_required"
+    - "unmodeled_media"
+  prohibited_actions:
+    - "autonomous_valve_closure"
+    - "autonomous_chemical_dosing_change"
+    - "service_denial"
+    - "identity_based_routing"
+
+data_classes:
+  machinery_safety_telemetry:
+    sensitivity: "sensitive_operational"
+    fields:
+      - "flow_lps"
+      - "head_m"
+      - "freeboard_m"
+      - "bod_mg_l"
+      - "tss_mg_l"
+      - "cec_meq_100g"
+      - "canal_node"
+    purpose: "restoration_containment_and_operator_safety"
+    consent_scope: "machinery_safety_and_restoration_containment"
+    collection_minimization: "collect_only_fields_required_for_surcharge_classification"
+    retention:
+      maximum_days: 30
+      deletion_path: "operator_or_authorized_steward_deletion_request"
+      export_path: "machine_readable_csv_or_sqlite_export"
+    access:
+      offline_readable: true
+      accessible_explanation_required: true
+      external_identity_verification_required: false
+
+fog:
+  unmodeled_media:
+    states:
+      - "unmodeled"
+      - "unknown"
+    required_response: "human_review_required"
+    permitted_fallback_routes:
+      - "human_review"
+      - "containment_hold"
+      - "offline_alarm"
+    automatic_control_allowed: false
+
+canal:
+  parameter_constraints:
+    design_lps:
+      minimum: 0.001
+      maximum: 100000.0
+      unit: "L/s"
+    flow_lps:
+      minimum: 0.0
+      maximum: 100000.0
+      unit: "L/s"
+    freeboard_m:
+      minimum: 0.0
+      maximum: 20.0
+      unit: "m"
+    downstream_control_distance_m:
+      minimum: 0.001
+      maximum: 100000.0
+      unit: "m"
+    bod_mg_l:
+      minimum: 0.0
+      maximum: 100000.0
+      unit: "mg/L"
+    tss_mg_l:
+      minimum: 0.0
+      maximum: 100000.0
+      unit: "mg/L"
+    cec_meq_100g:
+      minimum: 0.0
+      maximum: 500.0
+      unit: "meq/100g"
+
+classification:
+  formulas:
+    surcharge_ratio: "flow_lps / design_lps"
+    hydraulic_score: "surcharge_ratio + max(0, 0.50 - freeboard_m)"
+    ecological_score: "(bod_mg_l / 30) + (tss_mg_l / 100) + max(0, 20 - cec_meq_100g) / 20"
+    blast_radius_m: "downstream_control_distance_m * clamp(hydraulic_score / 2, 0.10, 1.00)"
+  critical_when:
+    - "surcharge_ratio >= 1.30"
+    - "freeboard_m <= 0.20"
+    - "ecological_score >= 3.00"
+  elevated_when:
+    - "surcharge_ratio >= 1.10"
+    - "ecological_score >= 1.75"
+  explanations:
+    critical: "Potential containment failure requires an accessible human operator notification and approved local response."
+    elevated: "Conditions exceed normal monitoring bounds and require increased observation."
+    contained: "Measured conditions are within the configured containment corridor."
+
+audit:
+  event_log_required: true
+  record_fields:
+    - "policy_date"
+    - "classification"
+    - "operator_explanation"
+    - "human_review_state"
+    - "fog_media_state"
+    - "retention_until_utc"
+  immutable_external_ledger_required: false
+  privacy_preserving_audit: true
