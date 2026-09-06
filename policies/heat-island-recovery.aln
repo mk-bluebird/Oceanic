@@ -1,0 +1,58 @@
+policy: heat_island_recovery
+version: 2.0.0
+data_class: ecological_measurement_and_claim_governance_policy
+purpose: measure a facility's net heat-island recovery contribution with transparent component conversions and uncertainty bounds
+consent_scope: aggregate_environmental_and_facility_measurement_data_only
+retention: retain_component_measurements_conversion_factors_uncertainty_and_review_events_for_configured_audit_period
+deletion: retain_minimal_provenance_after_raw_measurement_retention_expires
+accountability: conversion_provenance_uncertainty_reporting_human_review_remedy_pathway_and_public_claim_correction
+review_status: required_when_hirci_is_negative_or_uncertainty_crosses_zero
+access_equivalence_safeguards: heat_recovery_actions_must_not_reduce_accessibility_or_shift_thermal_burdens_to_protected_communities
+external_action_approval: required_before_external_publication_of_non_aggregate_location_sensitive_data
+
+metric:
+  name: heat_island_recovery_contribution_index
+  formula: (shade_equivalent + evapotranspiration_benefit + albedo_improvement - waste_heat_burden) / facility_footprint
+  target_unit: equivalent_tree_canopy_m2_per_facility_footprint_m2
+  require:
+    - approved_conversion_factor_for_each_component
+    - visible_component_values
+    - declared_temporal_scope
+    - facility_footprint_measurement
+    - point_estimate
+    - lower_uncertainty_bound
+    - upper_uncertainty_bound
+
+rules:
+  - id: negative-hirci-review
+    when: hirci_point_estimate_less_than_0
+    require:
+      - mandatory_human_review
+      - root_cause_assessment
+      - remedy_pathway
+      - accessible_public_explanation
+      - follow_up_measurement
+    prohibit:
+      - net_heat_island_recovery_claim
+      - unqualified_eco_benefit_claim
+
+  - id: uncertain-hirci-review
+    when: hirci_uncertainty_interval_crosses_0
+    require:
+      - public_claim_withheld
+      - measurement_method_review
+      - uncertainty_explanation
+      - follow_up_measurement
+    prohibit:
+      - high_confidence_net_recovery_claim
+
+  - id: non-compensation
+    when:
+      any:
+        - species_impact_threshold_exceeded
+        - rights_risk_threshold_exceeded
+        - accessibility_failure_detected
+        - consent_violation_detected
+    prohibit:
+      - using_hirci_to_override_blocking_condition
+      - using_positive_hirci_as_offset_for_rights_or_species_harm
