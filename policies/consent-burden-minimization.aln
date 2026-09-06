@@ -1,0 +1,71 @@
+policy: consent_burden_minimization
+version: 2.0.0
+data_class: public_interface_rights_governance_policy
+purpose: minimize unnecessary interactions and data requests while preserving equal public access to basic environmental information and essential assistance
+consent_scope: only_data_strictly_necessary_for_requested_service
+retention: retain_aggregate_interface_burden_measurements_and_redesign_events_for_configured_review_period
+deletion: delete_raw_interaction_data_after_immediate_service_completion
+accountability: burden_formula_visibility_human_review_accessible_feedback_and_redesign_pathway
+review_status: required_when_burden_exceeds_threshold_or_low_consent_alternative_is_absent
+access_equivalence_safeguards: consent_refusal_must_not_block_basic_environmental_data_access
+external_action_approval: required_for_export_of_non_aggregate_interface_usage_or_feedback_data
+
+metric:
+  name: consent_burden
+  formula: (required_interactions / service_delivered) + (data_requested / data_necessary) - alternative_access
+  require:
+    - documented_interaction_count
+    - documented_service_unit
+    - documented_data_necessity_basis
+    - low_consent_alternative_indicator
+    - declared_burden_threshold
+
+rules:
+  - id: low-consent-alternative-required
+    when: public_interface_is_available
+    require:
+      - low_consent_alternative
+      - anonymous_or_minimum_data_path
+      - accessible_nonvisual_and_nonauditory_equivalents
+      - clear_session_reset
+    prohibit:
+      - mandatory_account_creation
+      - mandatory_identity_verification
+      - device_fingerprinting
+      - behavioral_profiling
+      - unnecessary_data_collection
+
+  - id: basic-environmental-data-no-consent-penalty
+    when: person_refuses_optional_or_nonessential_data_processing
+    require:
+      - basic_environmental_data_access
+      - no_fee_information_path
+      - plain_language_explanation_of_optional_processing
+    prohibit:
+      - denial_of_basic_environmental_data
+      - reduced_service_quality_for_consent_refusal
+      - identity_based_or_device_based_service_restriction
+
+  - id: burden-threshold-remedy
+    when: consent_burden_score_exceeds_declared_threshold
+    require:
+      - mandatory_human_review
+      - interface_redesign_plan
+      - accessible_feedback_path
+      - follow_up_measurement
+      - public_plain_language_explanation
+    prohibit:
+      - treating_consent_burden_as_acceptable_without_review
+
+  - id: privacy-by-default
+    when: public_interface_session_begins
+    require:
+      - no_continuous_identity_linkage
+      - minimum_necessary_data_processing
+      - session_data_reset
+    prohibit:
+      - persistent_personal_profile
+      - facial_image_collection
+      - voiceprint_collection
+      - ip_address_logging
+      - mac_address_logging
