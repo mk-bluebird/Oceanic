@@ -1,0 +1,61 @@
+policy: cross_species_thermal_corridor
+version: 2.0.0
+data_class: ecological_thermal_constraint_policy
+purpose: prevent waste-heat discharge from exceeding the most protective approved human and wildlife thermal threshold at a canal node
+consent_scope: environmental_telemetry_and_approved_ecological_threshold_data_only
+retention: retain_threshold_provenance_discharge_decisions_and_review_events_for_configured_environmental_audit_period
+deletion: retain_minimal_decision_provenance_after_raw_telemetry_retention_expiry
+accountability: threshold_source_visibility_human_review_explanation_remediation_and_recalibration_record
+review_status: required_when_threshold_data_is_missing_expired_provisional_or_exceeded
+access_equivalence_safeguards: ecological_thermal_controls_must_not_be_used_to_deny_pedestrian_accessibility_or_essential_public_information
+external_action_approval: required_for_remote_discharge_control_or_external_export_of_sensitive_ecological_location_data
+
+canal_node:
+  threshold_rule: discharge_temperature_c_less_than_or_equal_to_minimum_of_human_aquatic_riparian_and_avian_maxima
+  required_thresholds:
+    - human_max_discharge_temperature_c
+    - aquatic_max_discharge_temperature_c
+    - riparian_max_discharge_temperature_c
+    - avian_max_discharge_temperature_c
+  require:
+    - approved_local_ecological_data
+    - threshold_source_provenance
+    - threshold_validity_window
+    - current_measurement_quality
+  prohibit:
+    - relaxing_threshold_for_economic_convenience
+    - relaxing_threshold_for_operational_convenience
+    - relaxing_threshold_for_credit_generation
+    - relaxing_threshold_for_positive_hirci
+    - substituting_average_threshold_for_most_sensitive_threshold
+
+rules:
+  - id: missing-species-data-fail-closed
+    when:
+      any:
+        - species_threshold_missing
+        - species_threshold_expired
+        - threshold_source_not_approved
+        - thermal_sensor_invalid
+    result:
+      permit_status: denied
+      explanation_code: CANAL_SPECIES_THERMAL_DATA_UNAVAILABLE
+    require:
+      - human_review
+      - threshold_data_remediation
+      - plain_language_explanation
+
+  - id: species-threshold-hard-constraint
+    when: discharge_temperature_exceeds_any_required_species_threshold
+    result:
+      permit_status: denied
+      explanation_code: CANAL_DISCHARGE_EXCEEDS_MOST_SENSITIVE_SPECIES_THRESHOLD
+    require:
+      - threshold_exceedance_event
+      - human_review
+      - remediation_pathway
+    prohibit:
+      - economic_override
+      - operational_override
+      - scalar_risk_offset
+      - automated_permit_grant
