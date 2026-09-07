@@ -1,0 +1,70 @@
+policy KerNonCompensationV1 {
+  data_class: ecological_advisory_evidence
+  purpose: cross_domain_advisory_aggregation
+  consent_scope: local_minimum_necessary_processing
+  retention: policy_bound_retention_and_deletion
+  accountability: versioned_provenance_and_human_review
+  review_status: review_required_for_material_change
+  access_equivalence: plain_language_and_accessible_review_required
+  external_action_approval: prohibited
+
+  allowed_implementation_languages {
+    cpp20
+    java17
+    kotlin19
+    lua54
+    sqlite3
+    aln_v2
+  }
+
+  prohibited_implementation_categories {
+    rust_crate
+    python_component
+    digital_twin
+    hardware_control
+    physical_actuation
+    automatic_external_export
+  }
+
+  invariant advisory_only {
+    prohibit: equipment_control
+    prohibit: physical_intervention
+    prohibit: autonomous_sampling
+    prohibit: external_automatic_action
+  }
+
+  invariant ker_component_visibility {
+    require: knowledge_factor_is_recorded
+    require: eco_impact_value_is_recorded
+    require: harm_risk_is_recorded
+    prohibit: scalar_score_as_sole_decision_basis
+  }
+
+  invariant non_compensation {
+    require: max_domain_harm_risk <= 0.35
+    require: min_domain_knowledge_factor >= 0.60
+    require: every_domain_fog_state == clear
+    otherwise: withhold
+  }
+
+  invariant negative_evidence {
+    require: detection_limit_when_not_detected
+    require: matrix_and_sampling_window_when_not_detected
+    prohibit: positive_advisory_from_negative_evidence_alone
+  }
+
+  invariant community_justice {
+    require: accessibility_impact_is_recorded
+    require: burden_and_benefit_review_is_available
+    require: correction_path_is_available
+    require: appeal_path_is_available
+  }
+
+  invariant material_change {
+    require: prior_ker_is_recorded
+    require: next_ker_is_recorded
+    require: consent_recheck
+    require: non_interference_recheck
+    require: human_review_for_material_advisory_change
+  }
+}
