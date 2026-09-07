@@ -1,0 +1,59 @@
+{
+  "fixture_version": "1.0.0",
+  "cases": [
+    {
+      "case_id": "known_least_resistance_route",
+      "nodes": ["A", "B", "C", "D"],
+      "edges": [
+        { "from": "A", "to": "B", "length_m": 20.0, "resistance": 0.2, "fog_state": "clear" },
+        { "from": "B", "to": "D", "length_m": 20.0, "resistance": 0.2, "fog_state": "clear" },
+        { "from": "A", "to": "C", "length_m": 10.0, "resistance": 0.8, "fog_state": "clear" },
+        { "from": "C", "to": "D", "length_m": 10.0, "resistance": 0.8, "fog_state": "clear" }
+      ],
+      "source": "A",
+      "target": "D",
+      "maximum_path_length_m": 50.0,
+      "expected": {
+        "status": "advisory_candidate",
+        "path": ["A", "B", "D"],
+        "length_m": 40.0,
+        "cost": 8.0
+      }
+    },
+    {
+      "case_id": "lower_cost_longer_route_excluded_by_length_limit",
+      "nodes": ["A", "B", "C", "D"],
+      "edges": [
+        { "from": "A", "to": "B", "length_m": 45.0, "resistance": 0.1, "fog_state": "clear" },
+        { "from": "B", "to": "D", "length_m": 45.0, "resistance": 0.1, "fog_state": "clear" },
+        { "from": "A", "to": "C", "length_m": 20.0, "resistance": 0.4, "fog_state": "clear" },
+        { "from": "C", "to": "D", "length_m": 20.0, "resistance": 0.4, "fog_state": "clear" }
+      ],
+      "source": "A",
+      "target": "D",
+      "maximum_path_length_m": 50.0,
+      "expected": {
+        "status": "advisory_candidate",
+        "path": ["A", "C", "D"],
+        "length_m": 40.0,
+        "cost": 16.0
+      }
+    },
+    {
+      "case_id": "fog_marked_edge_withholds",
+      "nodes": ["A", "B", "D"],
+      "edges": [
+        { "from": "A", "to": "B", "length_m": 10.0, "resistance": 0.2, "fog_state": "unmodeled_resistance_media" },
+        { "from": "B", "to": "D", "length_m": 10.0, "resistance": 0.2, "fog_state": "clear" }
+      ],
+      "source": "A",
+      "target": "D",
+      "maximum_path_length_m": 50.0,
+      "expected": {
+        "status": "withheld",
+        "fog_state": "unmodeled_resistance_media",
+        "reason": "A required edge has unmodeled resistance media."
+      }
+    }
+  ]
+}
