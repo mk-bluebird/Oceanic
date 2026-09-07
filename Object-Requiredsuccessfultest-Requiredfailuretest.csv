@@ -1,0 +1,6 @@
+"Object","Required successful test","Required failure test"
+"Counterfactual fairness","Aggregate scenario audit stays within declared tolerance","Proxy-risk flag, absent scenario, inaccessible review path, or invalid consent causes withholding"
+"SQL/ALN SMT","Solver returns unsat for negated ALN property within encoded domain","Deliberately weaken SQL FOG constraint; solver returns a counterexample"
+"Lua bounded checking","No unsafe state up to selected bound","Inject unmodeled_media → advisory_candidate; checker reports minimum counterexample depth"
+"Outbox","Same idempotency key yields exactly one local record/outbox row","Duplicate key, invalid retention, or consent failure rolls back the transaction"
+"Lineage","Same canonical frame yields identical SHA-256 identifier","Different parent, payload, schema version, or parameter version yields a different identifier"
