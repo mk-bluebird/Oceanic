@@ -1,0 +1,95 @@
+policy EcoRestorationIntegrationGatesV1 {
+  data_class: ecological_advisory_evidence
+  purpose: local_advisory_evaluation_and_human_review
+  consent_scope: minimum_necessary_local_processing
+  retention: policy_bound_deletion_and_audit_minimization
+  accountability: versioned_local_event_trace
+  review_status: human_review_required_for_material_change
+  access_equivalence: accessible_explanation_and_correction_path_required
+  external_action_approval: prohibited
+
+  prohibited_fields {
+    personal_identity
+    neural_data
+    biometric_data
+    health_data
+    medical_data
+    companion_system_telemetry
+    precise_private_location
+    authentication_secret
+  }
+
+  fog_reason_taxonomy {
+    missing_medium
+    missing_parameter
+    parameter_expired
+    calibration_failure
+    unmodeled_media
+    sediment_water_partition_uncertain
+    sorption_hysteresis_unresolved
+    cold_survival_unresolved
+    segmented_decay_required
+    detection_limit_missing
+    sampling_window_missing
+    matrix_missing
+    resolution_incompatible
+    consent_withdrawal
+    retention_expired
+    risk_boundary
+    access_equivalence_missing
+    integrity_failure
+  }
+
+  invariant fog_reason_separation {
+    require: fog_state_is_distinct_from_reason_code
+    otherwise: withhold_integrity_failure
+  }
+
+  invariant non_compensation {
+    require: r_factor <= 0.35
+    otherwise: withhold_risk_boundary
+  }
+
+  invariant negative_evidence_boundary {
+    prohibit: positive_advisory_from_negative_evidence_alone
+    require: detection_limit_for_not_detected
+    require: sampling_window_for_not_detected
+    require: matrix_for_not_detected
+  }
+
+  invariant model_scope {
+    require: medium_is_declared
+    require: spatial_resolution_is_compatible
+    require: temporal_window_is_valid
+    otherwise: human_review_required
+  }
+
+  invariant retention {
+    require: consent_scope_valid == true
+    require: retention_eligible == true
+    otherwise: withhold
+  }
+
+  invariant material_change {
+    require: prior_ker_recorded
+    require: next_ker_recorded
+    require: change_reason_recorded
+    require: human_review_before_material_advisory_change
+  }
+
+  invariant accessible_review {
+    require: missing_evidence_category
+    require: aggregation_window
+    require: hex_resolution
+    require: correction_path
+    require: appeal_path
+    otherwise: withhold_access_equivalence_missing
+  }
+
+  invariant advisory_only {
+    prohibit: actuator_control
+    prohibit: equipment_operation
+    prohibit: autonomous_field_sampling
+    prohibit: automatic_external_export
+  }
+}
