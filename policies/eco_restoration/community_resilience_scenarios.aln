@@ -1,0 +1,52 @@
+policy CommunityResilienceScenariosV1 {
+  data_class: aggregate_ecological_network_participatory_monitoring_and_scenario_data
+  purpose: local_advisory_resilience_privacy_and_scenario_analysis
+  consent_scope: approved_minimum_necessary_aggregate_processing
+  retention: policy_bound_retention_and_deletion
+  accountability: local_reviewable_provenance_and_material_change_records
+  review_status: human_review_required_before_release_or_redesign_interpretation
+  access_equivalence: accessible_explanation_correction_and_appeal_required
+  external_action_approval: prohibited
+
+  invariant network_resilience {
+    require: nonnegative_symmetric_edge_weights
+    require: node_and_edge_provenance
+    require: community_review_before_redesign_interpretation
+    require: accessibility_equivalent_review
+    prohibit: automatic_network_redesign
+  }
+
+  invariant participatory_privacy {
+    require: explicit_consent_scope
+    require: contribution_clipping
+    require: minimum_contributor_threshold
+    require: tracked_privacy_budget
+    require: aggregate_only_release
+    prohibit: reidentification
+    prohibit: individual_submission_release
+  }
+
+  invariant mdp_scenarios {
+    require: finite_horizon
+    require: source_bound_transition_probabilities
+    require: human_approved_reward_weights
+    require: uncertainty_and_limitation_summary
+    require: correction_path
+    require: appeal_path
+    prohibit: automatic_restoration_action
+    prohibit: physical_control
+  }
+
+  invariant fog_and_ker {
+    require: nonclear_fog_withholds_advisory_candidate
+    require: k_e_r_components_recorded
+    require: material_change_review
+  }
+
+  output allowed {
+    advisory_network_resilience_summary
+    differentially_private_aggregate_candidate
+    reviewed_scenario_recommendation
+    plain_language_withholding_reason
+  }
+}
