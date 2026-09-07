@@ -1,0 +1,71 @@
+policy AuditProvenanceSafetyV1 {
+  data_class: local_governance_audit_and_provenance
+  purpose: fairness_audit_proof_transition_and_lineage_validation
+  consent_scope: minimum_necessary_local_processing
+  retention: policy_bound_minimized_audit_retention
+  accountability: append_only_reviewable_records
+  review_status: human_review_required_for_material_change_and_release
+  access_equivalence: plain_language_summary_correction_and_appeal_required
+  external_action_approval: prohibited
+
+  prohibited_data {
+    individual_identity
+    protected_attribute_inference
+    personal_record
+    neural_data
+    biometric_data
+    health_data
+    medical_data
+    device_identifier
+    raw_private_location
+    authentication_secret
+  }
+
+  invariant allocation_fairness {
+    require: aggregate_area_level_input_only
+    require: declared_structural_scenarios
+    require: proxy_risk_screen
+    require: access_equivalence
+    require: human_appeal_path
+    prohibit: individual_allocation_decision
+  }
+
+  invariant sql_aln_proof {
+    require: versioned_sql_schema
+    require: versioned_aln_policy
+    require: bounded_domain_encoding
+    require: proof_certificate_for_critical_shard
+    prohibit: proof_claim_beyond_encoded_domain
+  }
+
+  invariant fog_bounded_check {
+    require: non_clear_fog_withholds_advisory_candidate
+    require: review_completion_before_clear
+    require: replacement_evidence_before_clear
+    require: consent_recheck_before_clear
+    require: noninterference_recheck_before_clear
+  }
+
+  invariant telemetry_delivery {
+    require: durable_local_idempotency_key
+    require: append_only_outbox_state
+    require: sink_duplicate_detection
+    require: visible_failure_and_retry_state
+    prohibit: unsupported_no_loss_claim
+  }
+
+  invariant lineage {
+    require: canonical_content_frame
+    require: approved_content_identity_algorithm
+    require: versioned_parent_edges
+    prohibit: personal_data_in_lineage
+    prohibit: secret_in_lineage
+  }
+
+  invariant advisory_only {
+    prohibit: physical_control
+    prohibit: hardware_frequency_control
+    prohibit: automatic_resource_allocation
+    prohibit: automatic_external_export
+  }
+}
