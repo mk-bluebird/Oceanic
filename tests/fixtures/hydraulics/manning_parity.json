@@ -1,0 +1,17 @@
+{
+  "fixture_id": "manning-parity-001",
+  "description": "Rectangular open-channel Manning discharge parity fixture.",
+  "inputs": {
+    "manning_n": 0.03,
+    "slope": 0.0025,
+    "width_m": 3.0,
+    "depth_m": 0.8
+  },
+  "expected": {
+    "area_m2": 2.4,
+    "wetted_perimeter_m": 4.6,
+    "hydraulic_radius_m": 0.5217391304347826,
+    "discharge_m3_s": 3.180558717704031
+  },
+  "tolerance": 0.000001
+}
