@@ -1,0 +1,217 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EcoRestorationAdvisoryEvent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "event_type",
+    "occurred_at_utc",
+    "advisory_id",
+    "hex_resolution",
+    "aggregation_window",
+    "status",
+    "fog_state",
+    "fog_reasons",
+    "metrics",
+    "review",
+    "retention"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "advisory_created",
+        "advisory_withheld",
+        "fog_transition",
+        "material_change",
+        "review_requested",
+        "review_completed",
+        "retention_tombstoned",
+        "deletion_completed"
+      ]
+    },
+    "occurred_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "advisory_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "hex_resolution": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 15
+    },
+    "aggregation_window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start_utc",
+        "end_utc"
+      ],
+      "properties": {
+        "start_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "end_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "advisory",
+        "informational",
+        "withheld",
+        "superseded"
+      ]
+    },
+    "fog_state": {
+      "type": "string",
+      "enum": [
+        "clear",
+        "unmodeled_media",
+        "human_review_pending",
+        "human_review_complete",
+        "withhold"
+      ]
+    },
+    "fog_reasons": {
+      "type": "array",
+      "minItems": 0,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "missing_medium",
+          "missing_parameter",
+          "parameter_expired",
+          "calibration_failure",
+          "unmodeled_media",
+          "sediment_water_partition_uncertain",
+          "sorption_hysteresis_unresolved",
+          "cold_survival_unresolved",
+          "segmented_decay_required",
+          "detection_limit_missing",
+          "sampling_window_missing",
+          "matrix_missing",
+          "resolution_incompatible",
+          "consent_withdrawal",
+          "retention_expired",
+          "risk_boundary",
+          "access_equivalence_missing",
+          "integrity_failure"
+        ]
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "knowledge_factor",
+        "eco_impact_value",
+        "harm_risk",
+        "accessibility_impact",
+        "rights_alignment"
+      ],
+      "properties": {
+        "knowledge_factor": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "eco_impact_value": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "harm_risk": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "accessibility_impact": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "rights_alignment": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "missing_evidence_categories",
+        "correction_path",
+        "appeal_path",
+        "human_review_required"
+      ],
+      "properties": {
+        "missing_evidence_categories": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ecological_material",
+              "water_quality",
+              "sediment_soil",
+              "infrastructure_energy",
+              "fog_uncertainty",
+              "community_justice"
+            ]
+          }
+        },
+        "correction_path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "appeal_path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "human_review_required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "retention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "retention_until_utc",
+        "consent_scope_valid",
+        "retention_eligible"
+      ],
+      "properties": {
+        "retention_until_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "consent_scope_valid": {
+          "type": "boolean"
+        },
+        "retention_eligible": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}
