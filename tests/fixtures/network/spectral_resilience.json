@@ -1,0 +1,48 @@
+{
+  "fixture_version": "1.0.0",
+  "cases": [
+    {
+      "case_id": "cycle_four_nodes",
+      "node_count": 4,
+      "edges": [
+        { "from": 0, "to": 1, "weight": 1.0, "active": true },
+        { "from": 1, "to": 2, "weight": 1.0, "active": true },
+        { "from": 2, "to": 3, "weight": 1.0, "active": true },
+        { "from": 3, "to": 0, "weight": 1.0, "active": true }
+      ],
+      "expected_lambda2": 2.0,
+      "tolerance": 0.000001
+    },
+    {
+      "case_id": "path_four_nodes",
+      "node_count": 4,
+      "edges": [
+        { "from": 0, "to": 1, "weight": 1.0, "active": true },
+        { "from": 1, "to": 2, "weight": 1.0, "active": true },
+        { "from": 2, "to": 3, "weight": 1.0, "active": true }
+      ],
+      "expected_lambda2": 0.5857864376269049,
+      "tolerance": 0.000001
+    },
+    {
+      "case_id": "disconnected_two_pairs",
+      "node_count": 4,
+      "edges": [
+        { "from": 0, "to": 1, "weight": 1.0, "active": true },
+        { "from": 2, "to": 3, "weight": 1.0, "active": true }
+      ],
+      "expected_lambda2": 0.0,
+      "expected_status": "withheld",
+      "expected_fog_state": "human_review_pending"
+    },
+    {
+      "case_id": "negative_weight_rejected",
+      "node_count": 2,
+      "edges": [
+        { "from": 0, "to": 1, "weight": -0.1, "active": true }
+      ],
+      "expected_status": "withheld",
+      "reason": "edge weights must be finite and non-negative"
+    }
+  ]
+}
