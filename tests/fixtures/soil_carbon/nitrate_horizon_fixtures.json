@@ -1,0 +1,49 @@
+{
+  "fixture_version": "1.0.0",
+  "pool_parameters": [
+    {
+      "pool_id": "fast",
+      "initial_carbon_kg_m2": 1.2,
+      "base_rate_per_day": 0.02,
+      "transformed_rate_per_day": 0.018,
+      "rate_interval_per_day": [0.01, 0.03]
+    },
+    {
+      "pool_id": "slow",
+      "initial_carbon_kg_m2": 4.8,
+      "base_rate_per_day": 0.002,
+      "transformed_rate_per_day": 0.0024,
+      "rate_interval_per_day": [0.001, 0.004]
+    }
+  ],
+  "validated_horizon_days": 365,
+  "nitrate_cases": [
+    {
+      "case_id": "nitrate_below_bound",
+      "nitrate_mg_l": 4.0,
+      "nitrate_bound_mg_l": 10.0,
+      "expected_status": "advisory_biochar_persistence"
+    },
+    {
+      "case_id": "nitrate_at_bound",
+      "nitrate_mg_l": 10.0,
+      "nitrate_bound_mg_l": 10.0,
+      "expected_status": "withhold_nitrate_bound_exceeded"
+    },
+    {
+      "case_id": "missing_nitrate_evidence",
+      "nitrate_mg_l": null,
+      "nitrate_bound_mg_l": 10.0,
+      "expected_status": "withhold_missing_nitrate_evidence"
+    }
+  ],
+  "monotonicity_case": {
+    "earlier_days": 30,
+    "later_days": 120,
+    "expected": "soc_later_less_than_or_equal_to_soc_earlier"
+  },
+  "horizon_case": {
+    "requested_days": 366,
+    "expected_status": "withheld"
+  }
+}
