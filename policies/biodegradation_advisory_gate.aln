@@ -1,0 +1,64 @@
+policy BiodegradationAdvisoryGateV1 {
+  data_class: ecological_material_evidence
+  purpose: bounded_advisory_evaluation
+  consent_scope: local_reviewable_processing_only
+  retention: policy_bound_minimum_necessary
+  accountability: append_only_local_audit
+  review_status: human_review_required_for_material_change
+  access_equivalence: plain_language_and_nonvisual_output_required
+  external_action_approval: prohibited
+
+  input evidence {
+    evidence_id: required
+    hex_anchor: required
+    observed_at_utc: required
+    source_valid: required
+    parameter_current: required
+    consent_scope_valid: required
+    retention_eligible: required
+    readiness: range[0.0, 1.0]
+    k_factor: range[0.0, 1.0]
+    e_factor: range[0.0, 1.0]
+    r_factor: range[0.0, 1.0]
+  }
+
+  invariant no_identity_inference {
+    prohibit: identity_inference
+    prohibit: augmentation_status_inference
+    prohibit: communication_mode_scoring
+  }
+
+  invariant eligibility_gate {
+    require: source_valid == true
+    require: parameter_current == true
+    require: consent_scope_valid == true
+    require: retention_eligible == true
+    otherwise: withhold_unresolved
+  }
+
+  invariant risk_non_compensation {
+    require: r_factor <= 0.35
+    otherwise: withhold_risk
+  }
+
+  invariant knowledge_gate {
+    require: k_factor >= 0.60
+    otherwise: withhold_knowledge
+  }
+
+  invariant readiness_gate {
+    allow_advisory_when: readiness >= 0.60
+    otherwise: informational_only
+  }
+
+  invariant advisory_only {
+    prohibit: physical_control
+    prohibit: actuator_command
+    prohibit: external_automatic_execution
+  }
+
+  output advisory {
+    allowed_states: advisory, informational, withheld
+    required_fields: k_factor, e_factor, r_factor, fog_state, plain_language_reason
+  }
+}
