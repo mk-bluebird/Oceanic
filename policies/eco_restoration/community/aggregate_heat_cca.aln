@@ -1,0 +1,62 @@
+policy AggregateHeatCommunityCcaV1 {
+  data_class: aggregate_area_level_environmental_and_service_access_data
+  purpose: exploratory_area_level_correlation_analysis
+  consent_scope: approved_aggregate_local_analysis_only
+  retention: minimum_necessary_aggregate_retention
+  accountability: local_reviewable_analysis_record
+  review_status: human_review_required_before_release
+  access_equivalence: plain_language_summary_and_accessible_table_required
+  external_action_approval: prohibited
+
+  prohibited_data {
+    direct_identifier
+    individual_record
+    protected_attribute_inference
+    biometric_data
+    neural_data
+    health_data
+    device_identifier
+    raw_precise_location
+    reidentification_attempt
+  }
+
+  required_release_gates {
+    aggregate_only
+    minimum_contributor_threshold
+    approved_hex_resolution
+    approved_time_aggregation_window
+    no_sparse_cell_release
+    no_individual_level_linkage
+    matrix_rank_validation
+    privacy_review
+    human_review
+  }
+
+  invariant exploratory_only {
+    prohibit: individual_risk_score
+    prohibit: eligibility_decision
+    prohibit: enforcement_action
+    prohibit: causal_claim_from_correlation
+  }
+
+  invariant result_scope {
+    require: canonical_correlation_is_labeled_area_level
+    require: uncertainty_and_limitations_are_reported
+    require: no_row_level_output
+    require: no_reidentification_path
+  }
+
+  invariant accessibility {
+    require: non_color_only_encoding
+    require: textual_correlation_summary
+    require: correction_path
+    require: appeal_path
+  }
+
+  output allowed {
+    aggregate_correlation_summary
+    matrix_validation_status
+    withheld_reason
+    plain_language_explanation
+  }
+}
