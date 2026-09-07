@@ -1,0 +1,82 @@
+{
+  "fixture_version": "1.0.0",
+  "cases": [
+    {
+      "case_id": "identical_two_node_metrics",
+      "metric_a": [
+        [0.0, 1.0],
+        [1.0, 0.0]
+      ],
+      "metric_b": [
+        [0.0, 1.0],
+        [1.0, 0.0]
+      ],
+      "expected": {
+        "status": "advisory_candidate",
+        "cost_near": 0.0,
+        "tolerance": 0.000001
+      }
+    },
+    {
+      "case_id": "rescaled_two_node_metrics",
+      "metric_a": [
+        [0.0, 1.0],
+        [1.0, 0.0]
+      ],
+      "metric_b": [
+        [0.0, 2.0],
+        [2.0, 0.0]
+      ],
+      "expected": {
+        "status": "advisory_candidate",
+        "cost_greater_than": 0.0
+      }
+    },
+    {
+      "case_id": "nonzero_diagonal_rejected",
+      "metric_a": [
+        [0.1, 1.0],
+        [1.0, 0.0]
+      ],
+      "metric_b": [
+        [0.0, 1.0],
+        [1.0, 0.0]
+      ],
+      "expected": {
+        "status": "withheld",
+        "reason": "metric diagonal must be zero"
+      }
+    },
+    {
+      "case_id": "asymmetric_metric_rejected",
+      "metric_a": [
+        [0.0, 1.0],
+        [0.5, 0.0]
+      ],
+      "metric_b": [
+        [0.0, 1.0],
+        [1.0, 0.0]
+      ],
+      "expected": {
+        "status": "withheld",
+        "reason": "metric matrix must be symmetric"
+      }
+    },
+    {
+      "case_id": "insufficient_iteration_budget",
+      "metric_a": [
+        [0.0, 1.0],
+        [1.0, 0.0]
+      ],
+      "metric_b": [
+        [0.0, 1.2],
+        [1.2, 0.0]
+      ],
+      "max_iterations": 0,
+      "expected": {
+        "status": "withheld",
+        "reason": "iteration budget is insufficient for bounded convergence"
+      }
+    }
+  ]
+}
