@@ -1,0 +1,14 @@
+[package]
+name = "kersafety-prover"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.86"
+license = "MIT OR Apache-2.0"
+description = "Kani proof harnesses and JSON reporting for bounded K-E-R monotonicity invariants."
+
+[dependencies]
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.120"
+
+[dev-dependencies]
+kani = "0.65.0"
