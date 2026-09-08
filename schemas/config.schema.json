@@ -1,0 +1,249 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://augmented-hub.local/schemas/config.schema.json",
+  "title": "Augmented-Hub Configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "llm_providers",
+    "eco_shards",
+    "routing"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "llm_providers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "default_llm",
+        "providers"
+      ],
+      "properties": {
+        "default_llm": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{0,63}$"
+        },
+        "providers": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9_]{0,63}$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "enabled",
+              "base_url",
+              "model",
+              "api_key_env",
+              "privacy_mode",
+              "max_context_tokens",
+              "max_output_tokens",
+              "supports_json_schema"
+            ],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "local",
+                  "openai_compatible",
+                  "anthropic_compatible",
+                  "custom"
+                ]
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "base_url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "model": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "api_key_env": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^[A-Z][A-Z0-9_]{0,127}$"
+              },
+              "privacy_mode": {
+                "type": "string",
+                "enum": [
+                  "local_only",
+                  "approved_remote",
+                  "metadata_minimized"
+                ]
+              },
+              "max_context_tokens": {
+                "type": "integer",
+                "minimum": 256,
+                "maximum": 1048576
+              },
+              "max_output_tokens": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 131072
+              },
+              "supports_json_schema": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    },
+    "eco_shards": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "root_dir",
+        "require_sha256",
+        "require_signature",
+        "allowed_extensions",
+        "validation_command",
+        "freshness"
+      ],
+      "properties": {
+        "root_dir": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*\\.\\.).+$"
+        },
+        "require_sha256": {
+          "type": "boolean"
+        },
+        "require_signature": {
+          "type": "boolean"
+        },
+        "allowed_extensions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              ".aln",
+              ".csv",
+              ".json"
+            ]
+          }
+        },
+        "validation_command": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "freshness": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "max_age_days",
+            "require_measurement_timestamp"
+          ],
+          "properties": {
+            "max_age_days": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 36500
+            },
+            "require_measurement_timestamp": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "routing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "require_validated_kfk",
+        "minimum_kfk_trust",
+        "fallback_policy",
+        "topic_routes"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "evidence_first",
+            "local_first",
+            "cost_aware"
+          ]
+        },
+        "require_validated_kfk": {
+          "type": "boolean"
+        },
+        "minimum_kfk_trust": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "fallback_policy": {
+          "type": "string",
+          "enum": [
+            "fail_closed",
+            "local_only",
+            "require_human_review"
+          ]
+        },
+        "topic_routes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "topic",
+              "provider",
+              "required_shard_domains",
+              "minimum_evidence_coverage"
+            ],
+            "properties": {
+              "topic": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]{0,63}$"
+              },
+              "provider": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]{0,63}$"
+              },
+              "required_shard_domains": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "air",
+                    "governance",
+                    "materials",
+                    "water"
+                  ]
+                }
+              },
+              "minimum_evidence_coverage": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
