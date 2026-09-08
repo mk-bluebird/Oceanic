@@ -1,0 +1,85 @@
+{
+  "$schema": "https://augmented-hub.local/schemas/chat_function_index.schema.json",
+  "table": "chat_function_index",
+  "primary_key": [
+    "function_id",
+    "version"
+  ],
+  "columns": [
+    {
+      "name": "function_id",
+      "sqlite_type": "TEXT",
+      "nullable": false
+    },
+    {
+      "name": "function_name",
+      "sqlite_type": "TEXT",
+      "nullable": false
+    },
+    {
+      "name": "language",
+      "sqlite_type": "TEXT",
+      "nullable": false
+    },
+    {
+      "name": "planes",
+      "sqlite_type": "TEXT",
+      "nullable": false
+    },
+    {
+      "name": "description",
+      "sqlite_type": "TEXT",
+      "nullable": false
+    },
+    {
+      "name": "input_schema_ref",
+      "sqlite_type": "TEXT",
+      "nullable": false
+    },
+    {
+      "name": "output_schema_ref",
+      "sqlite_type": "TEXT",
+      "nullable": false
+    },
+    {
+      "name": "invocation_mode",
+      "sqlite_type": "TEXT",
+      "nullable": false
+    },
+    {
+      "name": "availability",
+      "sqlite_type": "TEXT",
+      "nullable": false
+    },
+    {
+      "name": "requires_human_approval",
+      "sqlite_type": "INTEGER",
+      "nullable": false
+    },
+    {
+      "name": "version",
+      "sqlite_type": "TEXT",
+      "nullable": false
+    },
+    {
+      "name": "binary_path",
+      "sqlite_type": "TEXT",
+      "nullable": true
+    },
+    {
+      "name": "symbol",
+      "sqlite_type": "TEXT",
+      "nullable": true
+    },
+    {
+      "name": "network_policy",
+      "sqlite_type": "TEXT",
+      "nullable": true
+    },
+    {
+      "name": "retention_class",
+      "sqlite_type": "TEXT",
+      "nullable": true
+    }
+  ]
+}
