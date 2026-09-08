@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://augmented-hub.local/schemas/chat_function_index.schema.json",
+  "title": "Chat Function Index Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "function_id",
+    "function_name",
+    "language",
+    "planes",
+    "description",
+    "input_schema_ref",
+    "output_schema_ref",
+    "invocation_mode",
+    "availability",
+    "requires_human_approval",
+    "version"
+  ],
+  "properties": {
+    "function_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{2,127}$"
+    },
+    "function_name": {
+      "type": "string",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_:.-]{2,255}$"
+    },
+    "language": {
+      "type": "string",
+      "enum": [
+        "cpp",
+        "java",
+        "javascript",
+        "kotlin",
+        "lua",
+        "python",
+        "rego",
+        "rust",
+        "shell",
+        "sql",
+        "typescript"
+      ]
+    },
+    "planes": {
+      "type": "string",
+      "pattern": "^(accessibility|audit|eco|governance|integrity|privacy|research|safety)(,(accessibility|audit|eco|governance|integrity|privacy|research|safety))*$",
+      "description": "Comma-separated, unique, lowercase plane labels in lexical order. Values identify applicable policy and explanation obligations; they are not person, identity, rank, eligibility, or security-clearance classifications."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    },
+    "input_schema_ref": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*\\.\\.).+\\.json$"
+    },
+    "output_schema_ref": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*\\.\\.).+\\.json$"
+    },
+    "invocation_mode": {
+      "type": "string",
+      "enum": [
+        "in_process",
+        "subprocess",
+        "http_local",
+        "http_approved_remote",
+        "sql_read_only"
+      ]
+    },
+    "availability": {
+      "type": "string",
+      "enum": [
+        "available",
+        "disabled",
+        "unavailable",
+        "deprecated"
+      ]
+    },
+    "requires_human_approval": {
+      "type": "boolean"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "binary_path": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^(?!/)(?!.*\\.\\.).+$"
+    },
+    "symbol": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+    },
+    "network_policy": {
+      "type": "string",
+      "enum": [
+        "none",
+        "local_only",
+        "approved_remote"
+      ]
+    },
+    "retention_class": {
+      "type": "string",
+      "enum": [
+        "ephemeral",
+        "audit_limited",
+        "policy_defined"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "invocation_mode": {
+            "const": "in_process"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "binary_path",
+          "symbol"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "invocation_mode": {
+            "enum": [
+              "http_local",
+              "http_approved_remote"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "network_policy"
+        ]
+      }
+    }
+  ]
+}
