@@ -1,0 +1,248 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://augmented-hub.local/schemas/karma-governance-decision.schema.json",
+  "title": "Karma Governance Decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "decision_id",
+    "subject_did",
+    "purpose",
+    "scope",
+    "policy_version",
+    "status",
+    "karma_current",
+    "evidence",
+    "governance",
+    "integrity",
+    "review"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "decision_id": {
+      "type": "string",
+      "pattern": "^karma-[a-z0-9][a-z0-9-]{7,127}$"
+    },
+    "subject_did": {
+      "type": "string",
+      "pattern": "^bostrom1[0-9a-z]{20,120}$"
+    },
+    "purpose": {
+      "type": "string",
+      "enum": [
+        "contribution_governance",
+        "service_routing",
+        "pilot_participation"
+      ]
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "policy_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "uninitialized",
+        "provisional",
+        "active",
+        "suspended",
+        "superseded",
+        "revoked"
+      ]
+    },
+    "karma_current": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 1
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "artifact_path",
+          "sha256",
+          "relevance"
+        ],
+        "properties": {
+          "artifact_path": {
+            "type": "string",
+            "pattern": "^(?!/)(?!.*\\.\\.).+$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "relevance": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          }
+        }
+      }
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "quorum",
+        "approvals",
+        "conflict_of_interest_declarations"
+      ],
+      "properties": {
+        "quorum": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 99
+        },
+        "approvals": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "governance_did",
+              "role",
+              "signature"
+            ],
+            "properties": {
+              "governance_did": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "role": {
+                "type": "string",
+                "enum": [
+                  "reviewer",
+                  "steward",
+                  "appeal_reviewer"
+                ]
+              },
+              "signature": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]{32,4096}$"
+              }
+            }
+          }
+        },
+        "conflict_of_interest_declarations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          }
+        }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "canonical_payload_sha256",
+        "subject_signature",
+        "signature_algorithm"
+      ],
+      "properties": {
+        "canonical_payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "subject_signature": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{32,4096}$"
+        },
+        "signature_algorithm": {
+          "type": "string",
+          "enum": [
+            "ed25519",
+            "secp256k1"
+          ]
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issued_at",
+        "next_review_at",
+        "appeal_available"
+      ],
+      "properties": {
+        "issued_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "next_review_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "appeal_available": {
+          "type": "boolean",
+          "const": true
+        },
+        "supersedes_decision_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^karma-[a-z0-9][a-z0-9-]{7,127}$"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "uninitialized"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "karma_current": {
+            "const": null
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "provisional",
+              "active"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "karma_current": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  ]
+}
