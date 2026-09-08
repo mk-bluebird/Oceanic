@@ -1,0 +1,36 @@
+[Unit]
+Description=Augmented-Hub Eco Chat Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+User=eco-chat
+Group=eco-chat
+WorkingDirectory=/srv/augmented-hub
+ExecStart=/srv/augmented-hub/bin/eco-chat-server
+EnvironmentFile=/etc/augmented-hub/eco-chat.env
+LoadCredential=perplexity_api_key:/etc/augmented-hub/secrets/perplexity_api_key
+LoadCredential=bostrom_signing_key:/etc/augmented-hub/secrets/bostrom_signing_key
+Environment=PERPLEXITY_API_KEY_FILE=%d/perplexity_api_key
+Environment=BOSTROM_SIGNING_KEY_FILE=%d/bostrom_signing_key
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectHome=yes
+ProtectSystem=strict
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+ReadWritePaths=/var/lib/augmented-hub /run/augmented-hub
+ReadOnlyPaths=/srv/augmented-hub /etc/augmented-hub
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
