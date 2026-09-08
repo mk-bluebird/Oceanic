@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://augmented-hub.local/schemas/perplexity-adapter.schema.json",
+  "title": "Local Perplexity Adapter Protocol",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol_version",
+    "request_id",
+    "operation"
+  ],
+  "properties": {
+    "protocol_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "request_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{16,128}$"
+    },
+    "operation": {
+      "type": "string",
+      "enum": [
+        "search",
+        "health"
+      ]
+    },
+    "query": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "max_results": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10
+    },
+    "timeout_ms": {
+      "type": "integer",
+      "minimum": 1000,
+      "maximum": 30000
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "search"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "query",
+          "max_results",
+          "timeout_ms"
+        ]
+      }
+    }
+  ]
+}
