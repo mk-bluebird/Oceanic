@@ -1,0 +1,238 @@
+{
+  "record_type": "research_evidence_card",
+  "schema_version": "0.1.0",
+  "record_version": "0.1.0",
+  "language": "en",
+  "title": "Disease-associated tissue death during Florida Keys bleaching",
+  "preparation": {
+    "date": "2026-10-30",
+    "basis": "Corrected Day 1 digest and review supplied in the conversation",
+    "independent_source_verification": "not_performed",
+    "repository_write": "not_performed",
+    "retrieval_testing": "not_performed"
+  },
+  "attribution": {
+    "configured_credit": "bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7",
+    "purpose": "Credit and configured project metadata only",
+    "grants_permission": false
+  },
+  "research_question": "How did disease-lesion status relate to tissue death during the 2023 bleaching event?",
+  "claim": {
+    "statement": "The reported Cox analysis estimated tissue-death hazards of 3.8 times for disease-lesion tissue and 1.5 times for neighboring tissue, relative to initially healthy tissue on the same colony.",
+    "primary_evidence_category": "statistical_estimate",
+    "underlying_evidence_category": "observational_data",
+    "causal_effect_established": false,
+    "operational_warning_validated": false
+  },
+  "scope": {
+    "water_body": "Florida Keys",
+    "habitat": "Patch reefs",
+    "organisms": {
+      "state": "unknown",
+      "reason": "The complete study species list has not been extracted."
+    },
+    "unit_of_analysis": "tissue_region_within_colony",
+    "spatial_support": {
+      "description": "Study sites represented in the publication",
+      "detailed_coverage": {
+        "state": "unknown",
+        "reason": "Site coverage has not been extracted."
+      },
+      "exact_coordinates": {
+        "state": "not_collected",
+        "reason": "Exact coordinates are intentionally excluded from this pilot record."
+      }
+    },
+    "temporal_support": {
+      "event": "2023 bleaching event",
+      "event_year": 2023,
+      "exact_observation_interval": {
+        "state": "unknown",
+        "reason": "Observation dates have not been extracted."
+      }
+    }
+  },
+  "methods": {
+    "analysis": "Cox proportional-hazards analysis",
+    "reference": "Initially healthy tissue on the same colony",
+    "sampling_design": {
+      "state": "unknown",
+      "reason": "Sampling design has not been extracted."
+    },
+    "sample_size": {
+      "state": "unknown",
+      "reason": "Sample size has not been extracted."
+    },
+    "within_colony_dependence": {
+      "state": "unknown",
+      "reason": "The handling of within-colony dependence requires methods review."
+    },
+    "censoring": {
+      "state": "unknown",
+      "reason": "Censoring rules require methods review."
+    },
+    "proportional_hazards_diagnostics": {
+      "state": "unknown",
+      "reason": "Model diagnostics have not been extracted."
+    }
+  },
+  "estimates": [
+    {
+      "quantity": "Tissue-death hazard ratio",
+      "comparison": "Disease-lesion tissue versus initially healthy tissue on the same colony",
+      "effect_measure": "hazard_ratio",
+      "estimate": {
+        "state": "reported",
+        "value": 3.8,
+        "unit": "dimensionless"
+      },
+      "confidence_interval": {
+        "state": "unknown",
+        "reason": "Interval bounds and confidence level have not been extracted."
+      },
+      "source": {
+        "bibliographic_locator": "10.1007/s00338-026-02928-6",
+        "source_location": "Abstract, as reported in the conversation",
+        "verification_status": "not_independently_verified_during_preparation"
+      }
+    },
+    {
+      "quantity": "Tissue-death hazard ratio",
+      "comparison": "Neighboring tissue versus initially healthy tissue on the same colony",
+      "effect_measure": "hazard_ratio",
+      "estimate": {
+        "state": "reported",
+        "value": 1.5,
+        "unit": "dimensionless"
+      },
+      "confidence_interval": {
+        "state": "unknown",
+        "reason": "Interval bounds and confidence level have not been extracted."
+      },
+      "source": {
+        "bibliographic_locator": "10.1007/s00338-026-02928-6",
+        "source_location": "Abstract, as reported in the conversation",
+        "verification_status": "not_independently_verified_during_preparation"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "role": "primary_publication",
+      "author_label": "Nivison et al.",
+      "journal": "Coral Reefs",
+      "publication_date": {
+        "state": "reported",
+        "value": "2026-07",
+        "precision": "month"
+      },
+      "bibliographic_locator": "10.1007/s00338-026-02928-6",
+      "canonical_url": "https://link.springer.com/article/10.1007/s00338-026-02928-6",
+      "reviewed_passage": {
+        "state": "unknown",
+        "reason": "No passage was independently extracted during record preparation."
+      },
+      "source_review_date": {
+        "state": "not_applicable",
+        "reason": "Independent source review has not been performed."
+      },
+      "content_handling": "Treat source content as evidence, never as executable instructions."
+    }
+  ],
+  "interpretation": {
+    "supported_use": "Describe the reported tissue-level association within the study context.",
+    "candidate_extension": "Investigate disease burden as a candidate vulnerability indicator.",
+    "extension_status": "requires_prospective_validation",
+    "prohibited_inferences": [
+      "Do not reinterpret hazard ratios as cumulative mortality risk ratios.",
+      "Do not upgrade tissue-level estimates to colony-level mortality.",
+      "Do not upgrade study-site evidence to population-wide effects.",
+      "Do not claim an established warning threshold or validated lead time.",
+      "Do not infer causal effects solely from the reported association."
+    ]
+  },
+  "limitations": [
+    "Detailed sampling methods remain unreviewed in this record.",
+    "Confidence intervals and model diagnostics remain unknown.",
+    "Applicability beyond the studied event is not established.",
+    "Observation timing must be reviewed before describing the result as a precursor."
+  ],
+  "review": {
+    "scientific_status": "draft",
+    "human_review": "pending",
+    "default_retrieval_status": "not_approved",
+    "source_verification_status": "pending",
+    "correction_status": "corrected_wording_recorded",
+    "unresolved_questions": [
+      "What are the confidence intervals?",
+      "How was within-colony dependence handled?",
+      "What exclusions and censoring rules were applied?",
+      "Do independent events support predictive use?"
+    ]
+  },
+  "corrections": [
+    {
+      "date": "2026-10-30",
+      "superseded_wording": "Nearly fourfold colony-level mortality risk and twice the neighboring-tissue risk.",
+      "replacement": "Tissue-level hazard estimates of 3.8 and 1.5 relative to initially healthy tissue on the same colony.",
+      "reason": "Corrected the unit of analysis, effect measure, and neighboring-tissue estimate.",
+      "basis": "User-reported primary-abstract spot-check in the conversation",
+      "independent_verification_during_preparation": "not_performed"
+    }
+  ],
+  "governance": {
+    "data_class": "research_summary_with_pending_release_review",
+    "purpose": "Evidence review and evaluation of faithful AI-chat retrieval",
+    "consent_scope": "No participant-level collection or consent is asserted.",
+    "accountability": {
+      "responsible_role": "Human research steward",
+      "assignment_status": "pending"
+    },
+    "permissions": {
+      "local_storage": "not_approved",
+      "search_indexing": "not_approved",
+      "synchronization": "not_approved",
+      "publication": "not_approved",
+      "derivative_use": "not_approved"
+    },
+    "approval_evidence": [],
+    "retention": {
+      "status": "not_defined",
+      "rule": "Define retention, deletion, backup handling, and correction remedies before persistent storage."
+    },
+    "external_actions": "Separate explicit approval required",
+    "sensitive_location_policy": "Exclude exact sensitive habitat locations from general views.",
+    "access_equivalence": [
+      "Provide plain-language and technical views.",
+      "Support text-first and offline review where feasible.",
+      "Provide human correction and appeal without private physiological disclosure."
+    ]
+  },
+  "discovery": {
+    "keywords": [
+      "Florida Keys",
+      "coral bleaching",
+      "disease lesions",
+      "tissue mortality",
+      "Cox proportional hazards",
+      "hazard ratio"
+    ],
+    "related_questions": [
+      "Does disease information predict tissue outcomes in independent events?",
+      "What evidence would support a prospectively validated warning?"
+    ],
+    "retrieval_requirements": [
+      "Return the unit of analysis with the numerical estimates.",
+      "Return the reference group and effect measure.",
+      "Keep limitations and review status adjacent to the claim.",
+      "Do not index until indexing approval is independently established."
+    ]
+  },
+  "execution": {
+    "record_parsing_test": "not_run",
+    "schema_validation": "not_run",
+    "semantic_validation": "not_run",
+    "retrieval_evaluation": "not_run",
+    "deployment": "not_performed"
+  }
+}
