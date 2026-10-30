@@ -1,142 +1,171 @@
-# Ecological Reasoning Research Agenda
+## Formal reasoning, decision usefulness, and meaning preservation
 
-## Purpose
+### Purpose
 
-Explore how an AI-chat assistant can help people formulate deeper ecological
-questions, identify evidence that would distinguish competing explanations,
-and derive qualified results from appropriate sources and methods.
+Investigate how formal representations can improve ecological questions,
+evidence review, and qualified conclusions without confusing structural
+screening with scientific support or governance authorization.
 
-Do not search within repositories or make locating implementation files a
-research objective. Treat unavailable dependencies as unresolved constraints,
-not as interfaces to reconstruct through guesswork.
+Use ecological problems as the starting point. Formal methods are tools for
+clarifying those problems, not substitutes for ecological evidence.
 
-The supplied compendium, Lua module, and critique are starting materials.
-They do not define the full research space.
+Do not search within repositories. Do not reconstruct unavailable dependency
+contracts as if they were verified. Record implementation uncertainties
+separately from scientific research questions.
 
-## Research orientation
+### Research track A: State distinctions and meaningful comparison
 
-Seek discoveries at three explicitly distinguished levels:
+Investigate whether declaration, availability, knowledge, collection,
+applicability, and permission require separate dimensions.
 
-1. Newly encountered knowledge:
-   Findings already established or debated in external literature but not
-   represented in the supplied materials.
+Begin with nominal categories. Propose an order only after defining:
+- What the order means.
+- Which distinctions it preserves.
+- Which transformations are admissible.
+- Counterexamples to the proposed ordering.
+- The decisions for which comparison would be useful.
 
-2. New synthesis:
-   Connections, comparisons, or question patterns developed from existing
-   evidence. Label these as synthesis, not new empirical findings.
+Do not treat supplied text as verified knowledge.
+Do not infer known content from withholding.
+Do not assign scalar worth to participation or disclosure.
 
-3. Candidate original research:
-   Hypotheses, study designs, or analyses that could produce new evidence.
-   Do not describe them as discoveries before they are investigated.
+### Research track B: Coverage and eligibility
 
-Do not claim to change model weights, create persistent memory, or establish
-scientific authority through conversation.
+Study declaration coverage and supplied-content coverage as descriptive
+coordinates relative to frozen, versioned field sets.
 
-## Research method
+Preserve undefined ratios when denominators are zero.
+Distinguish declared non-applicability from reviewed applicability.
+Keep analytical eligibility separate from participation and authorization.
 
-For each selected ecological problem:
+Investigate which missing distinctions prevent a specific inference rather
+than reducing every frame to complete or incomplete.
 
-1. Begin with a substantive ecological question, not a software field list.
-2. Define the system boundary, response, spatial and temporal support,
-   relevant organisms or compartments, and intended use of the answer.
-3. Examine several plausible mechanisms and observation-process explanations.
-4. Identify what existing evidence supports, contradicts, or fails to address.
-5. Determine which comparison, observation, or analysis would distinguish
-   the remaining explanations.
-6. Select an estimand before selecting a statistical method.
-7. Explain what result the proposed method could establish and what it could
-   not establish.
-8. Produce the next discriminating question.
-9. Only then consider whether the reasoning pattern belongs in a reusable
-   vocabulary, question frame, evidence record, or software check.
+### Research track C: Composite ecological questions
 
-Use authoritative guidance, primary studies, methodological literature,
-reanalyses, and appropriately governed community knowledge where relevant.
-Trace shared datasets and methods rather than counting citations as
-independent evidence.
+Develop cases combining description, comparison, explanation, forecasting,
+and monitoring design.
 
-## Exploration domains
+Identify:
+- Requirements shared across intents.
+- Requirements unique to each intent.
+- Interaction requirements created by combining intents.
+- Conflicts between required scopes, estimands, or observation designs.
 
-Investigate connections across:
+Search for counterexamples to simple union-of-fields completeness.
 
-- Hydrology, exchange, mixing, residence time, and local exposure.
-- Oxygen, temperature, nutrients, sediments, and biological demand.
-- Food webs, habitat provision, dispersal, movement, and nutrient transport.
-- Individual condition, reproduction, recruitment, and population persistence.
-- Disturbance, recovery, continuing pressures, and restoration outcomes.
-- Observation processes, detectability, missingness, and measurement changes.
-- Thresholds, stability, early-warning hypotheses, and forecast usefulness.
-- Stewardship, access, livelihoods, rights, and community-defined priorities.
+### Research track D: Formal contracts and conformance
 
-Keep relationship types and directions explicit. Do not use network structure
-alone as a measure of ecological influence or intrinsic species worth.
+Propose a structural-screen contract only after reviewing ecological cases.
 
-## Language and accessibility
+Investigate:
+- Determinism under specified conditions.
+- Input non-mutation.
+- Exhaustive, disjoint state partitions.
+- Normalization idempotence.
+- Stable error envelopes.
+- Intent-order invariance.
+- Registry and field-set version compatibility.
+- Preservation of withheld and unresolved states.
+- Failure behavior at text, numeric, and resource boundaries.
 
-Study both ecological semantics and technical language support.
+Use named examples, generated cases, metamorphic tests, and minimized
+counterexamples. Do not describe passing tests as proof of scientific
+adequacy or operational readiness.
 
-Ecological semantics:
-- Ambiguous terms such as recovery, collapse, health, resilience, and success.
-- Differences between everyday language and operational scientific meanings.
-- Expressions of uncertainty, seasonality, place, relationship, and causality.
-- Cases where translation changes the implied ecological claim.
+### Research track E: Decision usefulness
 
-Technical support:
-- Unicode text handling and explicit length conventions.
-- Stable message keys separated from reviewed display text.
-- Language metadata and appropriate rendering.
-- Preservation of original wording alongside reviewed interpretations.
-- Plain-language, text-first, offline, and assistive-access options.
+Choose a decision before calculating value of information.
 
-Do not treat unfamiliar wording, communication variation, or incomplete
-phrasing as evidence of reduced competence. Ask only for information needed
-for the stated purpose.
+Possible decisions include:
+- Which clarification to ask next.
+- Which scientific reviewer should examine a case.
+- Whether a proposed analysis has enough declared information to proceed.
+- Which observation would most distinguish competing mechanisms.
 
-## Evidence and rights boundaries
+Specify actions, losses, constraints, signal distributions, costs, and
+evaluation outcomes.
 
-Separate observation, interpretation, hypothesis, model result, and
-recommendation.
+Compare against useful baselines. Measure mistaken acceptance, unnecessary
+clarifications, review burden, unsupported claims, and accessibility costs.
 
-Keep unknown, not collected, withheld, not applicable, and zero distinct.
+Do not use mutual information alone as evidence of practical value.
+Do not treat rights protections as optional rewards in a universal score.
 
-Do not collect protected knowledge merely to complete a frame.
-Public availability is not blanket permission for reuse or publication.
-Community knowledge must not be treated as an extractable public dataset.
-Respect relevant Tribal and community-defined authority, including a
-decision not to record knowledge.
+### Research track F: Scientific evidence and provenance
 
-## Required outputs
+Separate:
+- Computational lineage: which rule generated an output.
+- Scientific lineage: which observations and methods support a claim.
+- Attribution: who receives credit.
+- Governance: who may permit particular uses.
 
-A. A map of important ecological questions and unresolved mechanisms.
-B. A set of worked reasoning cases with traceable sources.
-C. A vocabulary of distinctions, common confusions, and counterexamples.
-D. An evidence-gap table with discriminating observations or analyses.
-E. A candidate corpus of question expansions and qualified claims.
-F. A short software-implications appendix identifying which requirements
-   follow from the research and which remain provisional.
+Investigate evidence dependence, corrections, applicability, and uncertainty.
 
-For every worked case, report:
-- Initial question.
-- Scope and intended use.
-- Evidence available.
-- Competing explanations.
-- Relevant measurement and observation limitations.
-- Proposed analysis and applicability conditions.
-- What a result would and would not establish.
-- Next discriminating question.
-- Privacy, authority, and disclosure boundaries.
+Treat weighted likelihoods, temporal discounts, and evidence aggregation as
+candidate scientific-review models requiring justification and calibration.
+Do not infer reliability from institutional authority alone.
 
-## Completion criteria
+### Research track G: Meaning-preserving change
 
-The output should improve the specificity and testability of ecological
-questions, not merely increase terminology.
+Investigate schema and registry changes using explicit semantic mappings.
 
-Preserve disagreements and inconclusive cases.
-Report limitations and failed approaches.
-Do not force every question into a completed frame.
-Do not present proposed software behavior as implemented or tested.
+Preserve original declarations and versions.
+Do not invent newly required content during migration.
+Report ambiguity or information loss.
+Define compatibility rules instead of automatically ignoring unknown keys.
 
-## Attribution
+Keep storage and retention choices separate from semantic migration.
+Do not create an event ledger without an approved purpose and retention
+policy.
+
+### Research track H: Language, access, and governance
+
+Study how ecological relationships, uncertainty, scope, and evidence are
+expressed across languages and communication styles.
+
+Combine automated registry checks with reviewed semantic examples.
+Preserve negation, uncertainty, agency, affected fields, and message purpose.
+
+Accept withheld information as a legitimate declaration.
+Trace analytical limitations to specific inference steps.
+Do not classify withholding as a participation failure.
+
+Require no neural, biometric, medical, implant, or companion-system
+disclosure.
+
+### Evidence status for every result
+
+Label each contribution as one of:
+- Source report.
+- Observation.
+- Assumption.
+- Definition.
+- Derivation under stated assumptions.
+- Tested counterexample.
+- Proposed method.
+- Hypothesis.
+- Recommendation.
+
+Do not label a new synthesis as a new empirical finding.
+
+### Required extended-answer structure
+
+1. Answer the ecological question directly to the extent evidence permits.
+2. Define the response, system boundary, and intended use.
+3. Describe evidence and observation support.
+4. Compare plausible mechanisms and alternative explanations.
+5. Introduce formal tools only where they clarify the question.
+6. State assumptions and boundary cases.
+7. Explain what would change the conclusion.
+8. Identify the next discriminating observation or analysis.
+9. State privacy, governance, accessibility, and transfer limits.
+
+Use layered explanations: a plain-language result first, then optional
+technical detail. Length should follow the problem, not a demand to include
+every formalism.
+
+### Attribution
 
 bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7
 
