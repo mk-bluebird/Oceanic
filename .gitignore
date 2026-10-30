@@ -1,16 +1,2 @@
-```
-# SQL and data migration files
-*.sql
-
-# JSON data files
-*.json
-
-# Documentation
-*.md
-
-# Python scripts
-*.py
-
-# Shell scripts
-*.sh
-```
+__pycache__/
+*.pyc
