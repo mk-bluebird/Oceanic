@@ -1,0 +1,6 @@
+case,n,reference_variance,welford_variance,shifted_two_pass_variance,welford_relative_error,two_pass_relative_error
+ordinary,4,175.0,175.0,175.0,0.0,0.0
+wide_range,5,500000000000.0,500000000000.0,500000000000.0,0.0,0.0
+large_offset,3,4.0,6.0,4.0,0.5,0.0
+small_spread,300,6.37909241743311e-07,6.382580983598894e-07,6.37909241743311e-07,0.0005468749999999944,0.0
+zero_variance,20,0.0,0.0,0.0,0.0,0.0
