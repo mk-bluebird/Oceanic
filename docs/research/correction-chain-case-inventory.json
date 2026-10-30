@@ -1,0 +1,67 @@
+{
+  "schema_version": "0.1.0",
+  "status": "synthetic_case_inventory_not_executable_graph_tests",
+  "attribution": "bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7",
+  "cases": [
+    {
+      "case_name": "partial_effect_measure",
+      "expected_behavior": "prefer_corrected_fields_and_review_derivatives",
+      "execution_status": "not_run"
+    },
+    {
+      "case_name": "correction_of_correction",
+      "expected_behavior": "follow_reviewed_applicable_correction",
+      "execution_status": "not_run"
+    },
+    {
+      "case_name": "concurrent_interpretations",
+      "expected_behavior": "preserve_alternatives",
+      "execution_status": "not_run"
+    },
+    {
+      "case_name": "criterion_not_recovery",
+      "expected_behavior": "label_rule_driven_change",
+      "execution_status": "not_run"
+    },
+    {
+      "case_name": "new_period_not_replacement",
+      "expected_behavior": "preserve_historical_observation",
+      "execution_status": "not_run"
+    },
+    {
+      "case_name": "overlapping_approved_branches",
+      "expected_behavior": "unresolved_branch",
+      "execution_status": "not_run"
+    },
+    {
+      "case_name": "disjoint_partial_branches",
+      "expected_behavior": "check_context_before_combining",
+      "execution_status": "not_run"
+    },
+    {
+      "case_name": "cyclic_changes",
+      "expected_behavior": "graph_error",
+      "execution_status": "not_run"
+    },
+    {
+      "case_name": "source_concern",
+      "expected_behavior": "surface_concern_without_assuming_falsity",
+      "execution_status": "not_run"
+    },
+    {
+      "case_name": "withdrawal_with_unaffected_data",
+      "expected_behavior": "exclude_withdrawn_interpretation_only",
+      "execution_status": "not_run"
+    },
+    {
+      "case_name": "protected_history",
+      "expected_behavior": "enforce_separate_history_permissions",
+      "execution_status": "not_run"
+    },
+    {
+      "case_name": "unresolved_proposal",
+      "expected_behavior": "review_flag_without_automatic_replacement",
+      "execution_status": "not_run"
+    }
+  ]
+}
