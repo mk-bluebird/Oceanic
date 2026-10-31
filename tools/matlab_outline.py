@@ -517,9 +517,15 @@ _LINE_COMMENT = re.compile(r"%")
 _CONTINUATION = re.compile(r"(\.\.\.[^\n]*)$")
 _DECL_FUNCTION = re.compile(r"^function\b")
 _DECL_CLASSDEF = re.compile(r"^classdef\b")
-_ATTR_LIST = re.compile(r"^\(([^()]*)\)\s*(.*)$")
+# Deliberately conservative: an attribute list may not contain '<', so an
+# attribute prefix such as ``classdef (Abstract) C < B`` keeps ``C`` as the
+# name instead of letting a greedy group swallow it into the superclass.
+_ATTR_LIST = re.compile(r"^\(([^()<]*)\)\s*(.*)$")
 _OUTPUT_BRACKET = re.compile(r"^\[([^\]]*)\]\s*=\s*(.+)$")
-_OUTPUT_SINGLE = re.compile(r"^([A-Za-z_][\w]*)\s*=\s*(.+)$")
+_NAME_RE = re.compile(r"[A-Za-z_\u00a1-\uffff][\w\u00a1-\uffff]*")
+# _NAME_RE is ungrouped; wrap it explicitly when embedding in a pattern that
+# reads group 1 as the captured identifier.
+_OUTPUT_SINGLE = re.compile(r"^(%s)\s*=\s*(.+)$" % _NAME_RE.pattern)
 
 
 def _split_logical_lines(text: str) -> list[tuple[int, int, str]]:
@@ -696,12 +702,12 @@ def _fallback_parse_declaration(text: str) -> dict | None:
         if single:
             outputs = [single.group(1)]
             rest = single.group(2).strip()
-    name_match = re.match(r"([A-Za-z_][\w\u00a1-\uffff]*)", rest)
+    name_match = _NAME_RE.match(rest)
     if name_match is None:
         # No identifier directly after `function` (or after the output list):
         # the declaration is malformed, so record it rather than guess a name.
         return {"status": "invalid", "kind": "function", "text": stripped}
-    name = name_match.group(1)
+    name = name_match.group(0)
     tail = rest[name_match.end() :].lstrip()
     arguments = ""
     if tail.startswith("("):
@@ -755,10 +761,10 @@ def _classdef_name(rest: str) -> str | None:
     if attributes:
         # A leading parenthesised group is an attribute list, not the name.
         text = attributes.group(2).strip()
-    match = re.match(r"([A-Za-z_][\w\u00a1-\uffff]*)", text)
+    match = _NAME_RE.match(text)
     if not match:
         return None
-    candidate = match.group(1)
+    candidate = match.group(0)
     reserved = {"end", "properties", "methods", "events", "arguments"}
     if candidate.lower() in reserved:
         return None
