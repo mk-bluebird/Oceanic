@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Private Consent and Correction Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "documentVersion",
+    "attributionAnchor",
+    "eventKind",
+    "recordedAt",
+    "effectiveAt",
+    "actor",
+    "scope",
+    "communication",
+    "correction",
+    "reviewStatus",
+    "retention",
+    "evidenceStatus"
+  ],
+  "properties": {
+    "documentVersion": {
+      "const": "0.1.0"
+    },
+    "attributionAnchor": {
+      "const": "bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7"
+    },
+    "eventKind": {
+      "enum": [
+        "authorization",
+        "scope_reduction",
+        "withdrawal",
+        "content_correction",
+        "review_request",
+        "review_resolution"
+      ]
+    },
+    "recordedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "effectiveAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "privateLabel",
+        "role",
+        "authorityEvidenceStatus"
+      ],
+      "properties": {
+        "privateLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "enum": [
+            "person",
+            "explicitly_authorized_support",
+            "reviewer",
+            "system_recorder"
+          ]
+        },
+        "authorityEvidenceStatus": {
+          "enum": [
+            "separately_verified",
+            "supplied_unverified",
+            "not_an_authorizing_event"
+          ]
+        }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "purposes",
+        "dataClasses",
+        "operations",
+        "destinations",
+        "validFrom",
+        "validUntil"
+      ],
+      "properties": {
+        "purposes": {
+          "$ref": "#/$defs/nonemptyTextSet"
+        },
+        "dataClasses": {
+          "$ref": "#/$defs/nonemptyTextSet"
+        },
+        "operations": {
+          "$ref": "#/$defs/nonemptyTextSet"
+        },
+        "destinations": {
+          "$ref": "#/$defs/nonemptyTextSet"
+        },
+        "validFrom": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "validUntil": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        }
+      }
+    },
+    "communication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method",
+        "plainLanguageExplanation",
+        "personReviewAvailable"
+      ],
+      "properties": {
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plainLanguageExplanation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "personReviewAvailable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "correction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "priorEventSha256",
+        "description",
+        "changesAuthorization"
+      ],
+      "properties": {
+        "priorEventSha256": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "description": {
+          "type": "string"
+        },
+        "changesAuthorization": {
+          "type": "boolean"
+        }
+      }
+    },
+    "reviewStatus": {
+      "enum": [
+        "pending",
+        "accepted",
+        "disputed",
+        "resolved",
+        "not_requested"
+      ]
+    },
+    "retention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy", "reviewDate"],
+      "properties": {
+        "policy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewDate": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "evidenceStatus": {
+      "enum": [
+        "record_only",
+        "supporting_evidence_available",
+        "evidence_review_pending"
+      ]
+    }
+  },
+  "$defs": {
+    "nonemptyTextSet": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}
